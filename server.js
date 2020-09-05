@@ -3,10 +3,10 @@ var host = process.env.HOST || '0.0.0.0';
 // Listen on a specific port via the PORT environment variable
 var port = process.env.PORT || 8080;
 
-// Grab the blacklist from the command-line so that we can update the blacklist without deploying
-// again. CORS Anywhere is open by design, and this blacklist is not used, except for countering
-// immediate abuse (e.g. denial of service). If you want to block all origins except for some,
-// use originWhitelist instead.
+/* Grab the blacklist from the command-line so that we can update the blacklist without deploying
+ again. CORS Anywhere is open by design, and this blacklist is not used, except for countering
+ immediate abuse (e.g. denial of service). If you want to block all origins except for some,
+ use originWhitelist instead. */
 var originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
 var originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
 function parseEnvList(env) {
@@ -15,23 +15,26 @@ function parseEnvList(env) {
   }
   return env.split(',');
 }
-// Set up url Prefix replacement 
-//var urlPATHPREFIX = parseEnvList(process.env.CORSANYWHERE_URLPATHPREFIX);
-// Set up rate-limiting to avoid abuse of the public CORS Anywhere server.
+
+/* Set up url Prefix replacement 
+// var urlPATHPREFIX = parseEnvList(process.env.CORSANYWHERE_URLPATHPREFIX);
+ Set up rate-limiting to avoid abuse of the public CORS Anywhere server. */
 var checkRateLimit = require('./lib/rate-limit')(process.env.CORSANYWHERE_RATELIMIT);
+
 var cors_proxy = require('./lib/cors-anywhere');
-// see https://github.com/Rob--W/cors-anywhere/issues/136
-// and https://github.com/Rob--W/cors-anywhere/issues/51
-// https://github.com/Rob--W/cors-anywhere/pull/52#issuecomment-251634168
-// req.url = req.url.replace(/^\/domain01(\/|$)/, 'https://realdomain.com$1');
-// req.url = req.url.replace('/proxy?url=', '/');
-// req.url = req.url.replace(/^\/pathprefix/, '/');
-// var req.url = req.url.replace(/^\/urlPATHPREFIX/, '/');
+/* see https://github.com/Rob--W/cors-anywhere/issues/136
+ and https://github.com/Rob--W/cors-anywhere/issues/51
+ https://github.com/Rob--W/cors-anywhere/pull/52#issuecomment-251634168
+ req.url = req.url.replace(/^\/domain01(\/|$)/, 'https://realdomain.com$1');
+ req.url = req.url.replace('/proxy?url=', '/');
+ req.url = req.url.replace(/^\/pathprefix/, '/');
+ var req.url = req.url.replace(/^\/urlPATHPREFIX/, '/');
+TESTING requireHeader: [], */
+
 cors_proxy.createServer({
   originBlacklist: originBlacklist,
   originWhitelist: originWhitelist,
   requireHeader: ['origin', 'x-requested-with'],
-// TESTING requireHeader: [],
   checkRateLimit: checkRateLimit,
   removeHeaders: [
     'cookie',
