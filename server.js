@@ -48,5 +48,5 @@ cors_proxy.createServer({
   //console.log('requireHeader ' + requireHeader);
   console.log('checkRateLimit ' + checkRateLimit);
   //console.log('redirectSameOrigin ' + redirectSameOrigin);
-  console.log('httpProxyOptions ' + httpProxyOptions);
+  //console.log('httpProxyOptions ' + httpProxyOptions);
 });
