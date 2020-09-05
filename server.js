@@ -42,5 +42,11 @@ cors_proxy.createServer({
   },
 }).listen(port, host, function() {
   console.log('Running CORS Anywhere on ' + host + ':' + port);
-  console.log(cors_proxy.createServer);
+  console.log('originBlacklist ' + originBlacklist);
+  console.log('originWhitelist ' + originWhitelist);
+  console.log('requireHeader ' + requireHeader);
+  console.log('checkRateLimit ' + checkRateLimit);
+  console.log('redirectSameOrigin ' + redirectSameOrigin);
+  console.log('httpProxyOptions ' + httpProxyOptions);
+  console.log(cors_proxy);
 });
