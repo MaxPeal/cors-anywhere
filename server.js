@@ -15,11 +15,19 @@ function parseEnvList(env) {
   }
   return env.split(',');
 }
-
+// Set up url Prefix replacement 
+var urlPATHPREFIX = parseEnvList(process.env.CORSANYWHERE_URLPATHPREFIX);
 // Set up rate-limiting to avoid abuse of the public CORS Anywhere server.
 var checkRateLimit = require('./lib/rate-limit')(process.env.CORSANYWHERE_RATELIMIT);
 
 var cors_proxy = require('./lib/cors-anywhere');
+// see https://github.com/Rob--W/cors-anywhere/issues/136
+// and https://github.com/Rob--W/cors-anywhere/issues/51
+// https://github.com/Rob--W/cors-anywhere/pull/52#issuecomment-251634168
+  ////req.url = req.url.replace(/^\/domain01(\/|$)/, 'https://realdomain.com$1');
+  ////req.url = req.url.replace('/proxy?url=', '/');
+  /////req.url = req.url.replace(/^\/pathprefix/, '/');
+  req.url = req.url.replace(/^\/urlPATHPREFIX/, '/');
 cors_proxy.createServer({
   originBlacklist: originBlacklist,
   originWhitelist: originWhitelist,
