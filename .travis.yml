@@ -1,5 +1,17 @@
+---
 language: node_js
-dist: xenial
+cache: npm
+
+os:
+  - linux
+
+matrix:
+    include:
+        - dist: trusty
+        - dist: xenial
+        - dist: bionic
+        - dist: focal
+
 node_js:
   - 0.10
   - 4
@@ -12,30 +24,9 @@ node_js:
   - 13
   - 13
   - 14
-jobs:
-  include:
-    - dist: focal
-      node_js: 4
-    - dist: focal
-      node_js: 5
-    - dist: focal
-      node_js: 6
-    - dist: focal
-      node_js: 7
-    - dist: focal
-      node_js: 8
-    - dist: focal
-      node_js: 9
-    - dist: focal
-      node_js: 10
-    - dist: focal
-      node_js: 11
-    - dist: focal
-      node_js: 12
-    - dist: focal
-      node_js: 13
-    - dist: focal
-      node_js: 14
+  - node # latest stable Node.js release
+  - lts/* # latest LTS Node.js release
+
 script:
   - npm run lint
   - npm run test
