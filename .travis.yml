@@ -4,13 +4,13 @@ cache: npm
 
 os:
   - linux
+  - dist: focal
 
 matrix:
     include:
         - dist: trusty
         - dist: xenial
         - dist: bionic
-        - dist: focal
 
 node_js:
   - 0.10
