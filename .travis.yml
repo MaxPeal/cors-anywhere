@@ -1,4 +1,5 @@
 language: node_js
+dist: xenial
 node_js:
   - 0.10
   - 4
@@ -13,11 +14,30 @@ node_js:
   - 14
 jobs:
   include:
-    - os: linux
-      dist: xenial
-    - os: linux
-      dist: focal
+    - dist: focal
+      node_js: 4
+    - dist: focal
+      node_js: 5
+    - dist: focal
+      node_js: 6
+    - dist: focal
+      node_js: 7
+    - dist: focal
+      node_js: 8
+    - dist: focal
+      node_js: 9
+    - dist: focal
+      node_js: 10
+    - dist: focal
+      node_js: 11
+    - dist: focal
+      node_js: 12
+    - dist: focal
+      node_js: 13
+    - dist: focal
+      node_js: 14
 script:
   - npm run lint
   - npm run test
   - npm run test-coverage && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage
+  
