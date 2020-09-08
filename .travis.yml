@@ -2,9 +2,7 @@ version: ~> 1.0
 language: node_js
 cache: npm
 
-os:
-  - linux
-  - dist: focal
+dist: focal
 
 matrix:
     include:
@@ -13,6 +11,8 @@ matrix:
         - dist: bionic
 
 node_js:
+  - node # latest stable Node.js release
+  - lts/* # latest LTS Node.js release
   - 0.10
   - 4
   - 6
@@ -24,11 +24,10 @@ node_js:
   - 13
   - 13
   - 14
-  - node # latest stable Node.js release
-  - lts/* # latest LTS Node.js release
 
 script:
   - npm run lint
   - npm run test
   - npm run test-coverage && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage
   
+
