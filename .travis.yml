@@ -7,6 +7,7 @@ before_install:
 - docker pull node:current-buster
 
 script:
-  - docker run -v $PWD:$PWD node:current-buster /bin/sh -c "npm run lint"
-  - docker run -v $PWD:$PWD node:current-buster /bin/sh -c "npm run test"
-  - docker run -v $PWD:$PWD node:current-buster /bin/sh -c "npm run test-coverage && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage"
+  #- docker run -w /home/travis -v $(pwd):$(pwd) node:current-buster /bin/sh -c "npm run lint"
+  - docker run -w $(pwd) -v $(pwd):$(pwd) node:current-buster /bin/sh -c "npm run lint"
+  - docker run -w $(pwd) -v $(pwd):$(pwd) node:current-buster /bin/sh -c "npm run test"
+  - docker run -w $(pwd) -v $(pwd):$(pwd) node:current-buster /bin/sh -c "npm run test-coverage && cat coverage/lcov.info | ./node_modules/.bin/coveralls && rm -rf coverage"
